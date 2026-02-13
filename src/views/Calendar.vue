@@ -1,5 +1,6 @@
 <script setup>
 import Todo from '../components/Todo.vue';
+import Input from '@/components/Input.vue'
 
 const weekDays = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday',
@@ -17,6 +18,10 @@ const weekDays = [
         <div class="days-grid">
             <Todo v-for="day in weekDays" :key="day" :dayName="day" />
         </div>
+    </div>
+    <div id="container">
+        <Input />
+        <Todo />
     </div>
 </template>
 
@@ -42,5 +47,9 @@ const weekDays = [
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+#container {
+    background-color: black;
 }
 </style>
