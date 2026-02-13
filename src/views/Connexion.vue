@@ -43,85 +43,195 @@ const goInscription = () => {
 }
 </script>
 <template>
-  <div id="Connect">
-    <div id="formulaire">
-      <h1>Connectez-vous ici</h1>
-      <form action="" @submit.prevent>
-        <div class="label">
-          <label for="email">Email</label>
-          <input type="email" placeholder="Mettez votre email" v-model="email" />
+  <div class="auth-container">
+    <div class="auth-card">
+
+      <!-- Branding -->
+      <div class="brand">
+        <h1>Calendar<span>.todoDev</span></h1>
+        <p>Bienvenue à nouveau 👋</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form @submit.prevent="connexion" class="form">
+
+        <div class="input-group">
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Votre email"
+            v-model="email"
+            required
+          />
         </div>
-        <div class="label">
-          <label for="">Mot de passe</label>
-          <input type="password" placeholder="Your password" v-model="password" />
+
+        <div class="input-group">
+          <label>Mot de passe</label>
+          <input
+            type="password"
+            placeholder="Votre mot de passe"
+            v-model="password"
+            required
+          />
         </div>
+
+        <button class="submit-btn">Connexion</button>
+
+        <p v-if="incorrect" class="error">
+          Email ou mot de passe incorrect.
+        </p>
+
       </form>
-    </div>
-    <div id="submitter">
-      <button @click="connexion" id="redirect">Connexion</button>
-      <p>Ou</p>
-      <button @click="goInscription" id="inscription">Inscription</button>
-    </div>
-    <div id="alert">
-      <p v-if="incorrect">
-        Email ou mot de passe incorrect!!! Incrivez vous si vous n'avez pas de compte
-      </p>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span></span>
+        <p>ou</p>
+        <span></span>
+      </div>
+
+      <!-- Redirect -->
+      <button class="secondary-btn" @click="goInscription">
+        Créer un compte
+      </button>
+
     </div>
   </div>
 </template>
 <style scoped>
 
-#Connect {
-  width: 400px;
-  margin: auto;
-  padding: 30px;
-  margin-top: 12%;
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-}
-.label {
+.auth-container {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-}
-#formulaire {
-  margin: auto;
-}
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-input {
-  width: 90%;
-  height: 30px;
-  border: 1px solid;
-  border-radius: 5px;
-  border-color: rgba(128, 0, 128, 0.616);
-}
-#submitter {
-  margin-block: 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  background: linear-gradient(135deg, #111827, #1f2937);
+  font-family: 'Inter', sans-serif;
 }
-#submitter button {
-  width: 80%;
-  height: 30px;
+
+.auth-card {
+  width: 400px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 16px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  animation: fadeIn 0.6s ease;
 }
-#inscription {
-  background-color: rgba(128, 0, 128, 0.616);
-  border-color: rgba(128, 0, 128, 0.616);
+
+.brand {
+  text-align: center;
+  margin-bottom: 30px;
 }
-#redirect {
-  background-color: rgba(0, 128, 0, 0.39);
-  border-color: rgba(0, 128, 0, 0.39);
+
+.brand h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
 }
-#alert {
-  width: 80%;
-  color: red;
+
+.brand h1 span {
+  color: #3b82f6;
+}
+
+.brand p {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-top: 6px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #d1d5db;
+}
+
+.input-group input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: white;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+}
+
+.submit-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: transparent;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.secondary-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.divider span {
+  flex: 1;
+  height: 1px;
+  background: #374151;
+}
+
+.divider p {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.error {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #f87171;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 </style>

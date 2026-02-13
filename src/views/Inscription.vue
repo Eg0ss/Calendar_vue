@@ -60,76 +60,145 @@ async function connected() {
 </script>
 
 <template>
-  <div id="Connect">
-    <div id="formulaire">
-      <form action="" @submit.prevent="connected">
-        <div class="label">
-          <label for="Nom">Nom</label>
-          <input type="text" placeholder="Entrer votre nom (facultatif)" v-model="nom" required />
+  <div class="auth-container">
+    <div class="auth-card">
+
+      <!-- Logo / Titre -->
+      <div class="brand">
+        <h1>Calendar<span>.todoDev</span></h1>
+        <p>Organisez vos journées intelligemment</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form @submit.prevent="connected" class="form">
+
+        <div class="input-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Nom (facultatif)" v-model="nom" />
         </div>
-        <div class="label">
-          <label for="Prénoms">Prénoms (s)</label>
-          <input type="text" placeholder="Entrer votre prénom" v-model="prenom" required />
+
+        <div class="input-group">
+          <label>Prénoms</label>
+          <input type="text" placeholder="Votre prénom" v-model="prenom" required />
         </div>
-        <div class="label">
-          <label for="email">Email</label>
-          <input type="email" placeholder="Mettez votre email" v-model="email" required />
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" placeholder="Votre email" v-model="email" required />
         </div>
-        <div class="label">
-          <label for="">Entrer Mot de passe</label>
-          <input type="password" placeholder="Your password" v-model="password" required />
+
+        <div class="input-group">
+          <label>Mot de passe</label>
+          <input type="password" placeholder="Votre mot de passe" v-model="password" required />
         </div>
-        <div class="label">
-          <label for="">Confirmer votre mot passe</label>
-          <input type="password" placeholder="Your password" v-model="confirmPassword" required />
+
+        <div class="input-group">
+          <label>Confirmer le mot de passe</label>
+          <input type="password" placeholder="Confirmer le mot de passe" v-model="confirmPassword" required />
         </div>
-        <button id="inscription">Connectez-vous</button>
+
+        <button class="submit-btn">Créer un compte</button>
+
       </form>
+
     </div>
-    <!-- <div id="submitter">
-      <button @click="$router.back()">Retour</button>
-    </div> -->
   </div>
 </template>
+
 <style scoped>
-#Connect {
-  width: 400px;
-  margin: auto;
-  margin-top: 10%;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
-  padding: 25px;
+
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #111827, #1f2937);
+  font-family: 'Inter', sans-serif;
 }
 
-#formulaire {
-  margin-left: 20px;
+.auth-card {
+  width: 420px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 16px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  animation: fadeIn 0.6s ease;
 }
-.label {
-  display: flex;
-  flex-direction: column;
+
+.brand {
+  text-align: center;
+  margin-bottom: 30px;
 }
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-input {
-  width: 80%;
-  height: 30px;
-}
-button {
-  width: 80%;
-  height: 30px;
-}
-#submitter {
-  margin-block: 10px;
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-}
-#inscription {
+
+.brand h1 {
+  font-size: 28px;
+  font-weight: 700;
   color: white;
-  height: 30px;
-  background-color: rgba(128, 0, 128, 0.616);
-  border-color: rgba(128, 0, 128, 0.616);
 }
+
+.brand h1 span {
+  color: #3b82f6;
+}
+
+.brand p {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-top: 6px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #d1d5db;
+}
+
+.input-group input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: white;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+}
+
+.submit-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
