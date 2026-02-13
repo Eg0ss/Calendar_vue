@@ -1,5 +1,24 @@
 <script setup>
+
+
+import { ref } from 'vue';
 const emit = defineEmits(['close', 'add-task'])
+const props = defineProps({
+  days: String
+})
+const taskText = ref('');
+const submitTask = () => {
+  if (taskText.value.trim() === '') {
+    alert('Please enter a task');
+    return;
+  }
+  emit('add-task', taskText.value);
+  console.log(taskText.value);
+  taskText.value = '';
+
+
+}
+
 </script>
 
 <template>
@@ -16,7 +35,7 @@ const emit = defineEmits(['close', 'add-task'])
           <button id="quit" @click="$emit('close')">✕</button>
         </div>
 
-        <h2></h2>
+        <h2>{{ props.days }}</h2>
 
         <input type="text" placeholder="New event..." v-model="taskText" />
 
@@ -32,6 +51,7 @@ const emit = defineEmits(['close', 'add-task'])
   justify-content: space-around;
   padding-top: 50px;
 }
+
 .calendar-hero {
   display: flex;
   flex-direction: column;
@@ -44,6 +64,7 @@ const emit = defineEmits(['close', 'add-task'])
   max-width: 400px;
   border-radius: 10px;
 }
+
 #quit {
   border-radius: 50%;
   width: 30px;
@@ -51,6 +72,7 @@ const emit = defineEmits(['close', 'add-task'])
   border: 1px solid red;
   color: red;
 }
+
 .modal {
   background: white;
   padding: 25px;
@@ -79,11 +101,13 @@ input {
   width: 30%;
   border-radius: 6px;
 }
+
 h1 {
   color: white;
   font-family:
     'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 p {
   color: white;
   font-family:

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Connexion from '/src/views/Connexion.vue'
+// import Connexion from '/src/views/Connexion.vue'
 import Connexion from '@/views/Connexion.vue'
 import Inscription from '@/views/Inscription.vue'
 import Calendar from '@/views/Calendar.vue'
