@@ -1,11 +1,23 @@
-<script setup>
-import Input from './components/Input.vue'
-import Todo from './components/Todo.vue'  
-</script>
+    <script setup>
 
+</script>
+    
 <template>
-  <Input />
-  <Todo />
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
-<style scoped></style>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7f6;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+</style>
