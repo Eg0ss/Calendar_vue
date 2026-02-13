@@ -1,11 +1,11 @@
-<script setup></script>
+<script setup>
+import Input from './components/Input.vue'
+import Todo from './components/Todo.vue'  
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <Input />
+  <Todo />
 </template>
 
 <style scoped></style>
