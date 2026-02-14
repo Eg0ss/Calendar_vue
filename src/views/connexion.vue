@@ -35,7 +35,7 @@ const connexion = async () => {
   localStorage.setItem('currentUser', JSON.stringify(user))
 
   // 4. redirection
-  router.push('/home')
+  router.push('/homeCalendar')
 }
 
 const goInscription = () => {
