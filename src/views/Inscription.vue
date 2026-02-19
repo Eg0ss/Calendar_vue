@@ -21,8 +21,10 @@ const users = [
     status: 'actif',
   },
 ]
-
+  
+// Récupération des utilisateurs depuis le localStorage
 async function connected() {
+  
   if (password.value !== confirmPassword.value) {
     alert('Les mots de passe ne correspondent pas')
     return
