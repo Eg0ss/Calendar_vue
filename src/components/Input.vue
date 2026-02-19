@@ -1,75 +1,46 @@
 <script setup>
-
-
-import { ref } from 'vue';
+import { ref } from 'vue'
 const emit = defineEmits(['close', 'add-task'])
 const props = defineProps({
-  days: String
+  days: String,
 })
-const taskText = ref('');
+const taskText = ref('')
 const submitTask = () => {
   if (taskText.value.trim() === '') {
-    alert('Please enter a task');
-    return;
+    alert('Please enter a task')
+    return
   }
-  emit('add-task', taskText.value);
-  console.log(taskText.value);
-  taskText.value = '';
-
-
+  emit('add-task', taskText.value)
+  console.log(taskText.value)
+  taskText.value = ''
 }
-
 </script>
 
 <template>
-  <div id="entête">
-    <div class="calendar-hero">
-      <img src="/public/calendar.avif" alt="Calendar illustration" />
-      <h1>Bienvenue sur Calendar.todoDev</h1>
-      <p>Organisez vos tâches par jour et suivez votre planning facilement.</p>
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add a new event</h3>
+      <button id="quit" @click="$emit('close')">✕</button>
     </div>
-    <div class="overlay">
-      <div class="modal">
-        <div class="modal-header">
-          <h3>Add a new event</h3>
-          <button id="quit" @click="$emit('close')">✕</button>
-        </div>
+    <h2>{{ props.days }}</h2>
+    <input type="text" placeholder="New event..." v-model="taskText" />
 
-        <h2>{{ props.days }}</h2>
-
-        <input type="text" placeholder="New event..." v-model="taskText" />
-
-        <button class="submit" @click="submitTask">Submit</button>
-      </div>
-    </div>
+    <button class="submit" @click="submitTask">Submit</button>
   </div>
 </template>
 
 <style scoped>
-#entête {
-  display: flex;
-  justify-content: space-around;
-  padding-top: 50px;
-}
-
-.calendar-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.calendar-hero img {
-  max-width: 400px;
-  border-radius: 10px;
-}
-
+ 
 #quit {
   border-radius: 50%;
   width: 30px;
   height: 30px;
   border: 1px solid red;
+  color: red;
+  background-color: rgba(255, 0, 0, 0.24);
+  cursor: pointer;
+}
+h2 {
   color: red;
 }
 
@@ -103,12 +74,12 @@ input {
 }
 
 h1 {
-  color: white;
+  color: #3b82f6;
   font-family:
     'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-p {
+span {
   color: white;
   font-family:
     'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
