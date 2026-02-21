@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref , watch } from 'vue'
 const emit = defineEmits(['close', 'add-task', 'readtask'])
 const props = defineProps({
   days: String,
+  editingTask: Object
 })
-
 
 const taskText = ref('')
 const submitTask = () => {
@@ -17,7 +17,15 @@ const submitTask = () => {
   taskText.value = ''
 }
 
-
+watch(
+  () => props.editingTask,
+  (task) => {
+    if (task) {
+      taskText.value = task.title
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

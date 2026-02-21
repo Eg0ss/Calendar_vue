@@ -8,13 +8,10 @@ const modal = ref(false)
 const editingTask = ref(null)
 const notification = ref({ show: false, message: '', type: 'success' })
 
-
-
-
 // Fonction utilitaire pour déclencher la notif
 function ViewNotif(msg, type = 'success') {
   notification.value = { show: true, message: msg, type }
-  
+
   // Cache la notification après 3 secondes
   setTimeout(() => {
     notification.value.show = false
@@ -39,8 +36,8 @@ function deletetask(id) {
 function submitTask(taskTitle) {
   if (editingTask.value) {
     // Mode Edition
-    const index = tasks.value.findIndex(t => t.id === editingTask.value.id);
-    
+    const index = tasks.value.findIndex((t) => t.id === editingTask.value.id)
+
     if (index !== -1) {
       tasks.value[index].title = taskTitle
       ViewNotif('Tâche mise à jour !')
@@ -73,9 +70,9 @@ function deletemodale() {
   editingTask.value = null
 }
 // -----------------------------------------------------------------
-// Function final du drag and drop 
+// Function final du drag and drop
 function moveTask({ id, newDay }) {
-  const task = tasks.value.find(t => t.id === id)
+  const task = tasks.value.find((t) => t.id === id)
   if (task) {
     task.day = newDay
   }
@@ -87,14 +84,9 @@ function readtask() {
 <template>
   <div class="calendar-container">
     <Transition name="slide">
-      <Notif 
-        v-if="notification.show" 
-        :message="notification.message" 
-        :type="notification.type" 
-      />
+      <Notif v-if="notification.show" :message="notification.message" :type="notification.type" />
     </Transition>
-
-    </div>
+  </div>
   <div class="calendar-container">
     <div id="entête">
       <div class="calendar-hero">
@@ -104,7 +96,14 @@ function readtask() {
       </div>
       <div class="overlay">
         <Transition name="fade">
-          <Input v-if="modal" @add-task="submitTask" @readtask="readtask" :days="day" @close="deletemodale" />
+          <Input
+            v-if="modal"
+            @add-task="submitTask"
+            @readtask="readtask"
+            :days="day"
+            :editing-task="editingTask"
+            @close="deletemodale"
+          />
         </Transition>
       </div>
     </div>
@@ -114,16 +113,16 @@ function readtask() {
     </header>
 
     <div class="days-grid">
-  <Todo
-  v-for="day in weekDays"
-  :key="day"
-  :dayName="day"
-  @clickday="dayfunc"
-  :tasks="tasks.filter((t) => t.day === day)"
-  @delete-task="deletetask"
-  @edit-task="edittask"
-  @move-task="moveTask"
-/>
+      <Todo
+        v-for="day in weekDays"
+        :key="day"
+        :dayName="day"
+        @clickday="dayfunc"
+        :tasks="tasks.filter((t) => t.day === day)"
+        @delete-task="deletetask"
+        @edit-task="edittask"
+        @move-task="moveTask"
+      />
     </div>
   </div>
 </template>
@@ -134,10 +133,12 @@ function readtask() {
   transition: all 0.3s ease;
 }
 /* Animation pour la notification */
-.slide-enter-active, .slide-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: all 0.4s ease;
 }
-.slide-enter-from, .slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   transform: translateX(100%);
   opacity: 0;
 }
