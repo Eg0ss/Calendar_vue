@@ -1,8 +1,16 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { authservice } from './services/authservices'
 
 const route = useRoute()
+const router = useRouter()
+
+const handleLogout = () => {
+  authservice.logout()
+  router.push('/')
+}
 </script>
+
 
 <template>
   <nav v-if="!route.meta.hideNavbar" class="navbar">
@@ -11,12 +19,12 @@ const route = useRoute()
     <div class="nav-links">
       <router-link to="/homeCalendar">Calendar</router-link>
       <router-link to="/home">Todo</router-link>
-      <router-link class="logout" to="/">LogOut</router-link>
+      <button class="logout" @click="handleLogout">LogOut</button>
     </div>
   </nav>
-
   <router-view />
 </template>
+
 
 <style>
 .navbar {
@@ -28,13 +36,13 @@ const route = useRoute()
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .logout {
   background: linear-gradient(45deg, #3b82f6, #9333ea);
+  border: none;
   padding: 10px 20px;
   border-radius: 12px;
   text-decoration: none;

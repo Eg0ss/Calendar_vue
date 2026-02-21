@@ -1,19 +1,23 @@
 <script setup>
 import { ref } from 'vue'
-const emit = defineEmits(['close', 'add-task'])
+const emit = defineEmits(['close', 'add-task', 'readtask'])
 const props = defineProps({
   days: String,
 })
+
+
 const taskText = ref('')
 const submitTask = () => {
-  if (taskText.value.trim() === '') {
-    alert('Please enter a task')
+  if (taskText.value.trim() === ''){
+    emit('readtask');
     return
   }
   emit('add-task', taskText.value)
   console.log(taskText.value)
   taskText.value = ''
 }
+
+
 </script>
 
 <template>
@@ -23,14 +27,17 @@ const submitTask = () => {
       <button id="quit" @click="$emit('close')">✕</button>
     </div>
     <h2>{{ props.days }}</h2>
-    <input type="text" placeholder="New event..." v-model="taskText" />
+    <input type="text" placeholder="New event..." v-model="taskText" required/>
 
     <button class="submit" @click="submitTask">Submit</button>
   </div>
 </template>
 
 <style scoped>
- 
+* {
+  font-family:
+    'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 #quit {
   border-radius: 50%;
   width: 30px;
@@ -72,7 +79,10 @@ input {
   width: 30%;
   border-radius: 6px;
 }
-
+h3 {
+  color: #3b82f6;
+  font-size: 25px;
+}
 h1 {
   color: #3b82f6;
   font-family:

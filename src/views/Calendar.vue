@@ -2,9 +2,24 @@
 import { ref } from 'vue'
 import Todo from '../components/Todo.vue'
 import Input from '@/components/Input.vue'
+import Notif from '@/components/Notif.vue'
 const day = ref('')
 const modal = ref(false)
+const editingTask = ref(null)
+const notification = ref({ show: false, message: '', type: 'success' })
 
+
+
+
+// Fonction utilitaire pour déclencher la notif
+function ViewNotif(msg, type = 'success') {
+  notification.value = { show: true, message: msg, type }
+  
+  // Cache la notification après 3 secondes
+  setTimeout(() => {
+    notification.value.show = false
+  }, 3000)
+}
 // Tableau de joours de la semaine
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 // Fonction pour recevoir le jour cliqué depuis le composant Todo
@@ -17,21 +32,35 @@ const tasks = ref([])
 // Fonction pour supprimer une tâche
 function deletetask(id) {
   tasks.value = tasks.value.filter((task) => task.id !== id)
-  console.log('tableau mis a jour', tasks.value)
+  ViewNotif('Tâche supprimée avec succès 👍', 'error')
 }
 // -------------------------------------------------------------
 // Fonction pour ajouter une tâche
-function submitTask(task) {
-  tasks.value.push({ id: Date.now(), title: task, day: day.value })
-  console.log('tableu mis a jour', tasks.value)
+function submitTask(taskTitle) {
+  if (editingTask.value) {
+    // Mode Edition
+    const index = tasks.value.findIndex(t => t.id === editingTask.value.id);
+    
+    if (index !== -1) {
+      tasks.value[index].title = taskTitle
+      ViewNotif('Tâche mise à jour !')
+    }
+    editingTask.value = null // Reset après modification
+  } else {
+    // Mode Ajout
+    tasks.value.push({ id: Date.now(), title: taskTitle, day: day.value })
+    ViewNotif('Nouvelle tâche ajoutée !✔')
+  }
+  deletemodale()
 }
 // -------------------------------------------------------------------------
 // fonction pour éditer une tâche
 function edittask(id) {
-  const index = tasks.value.findIndex((task) => task.id === id)
-  if (index !== -1) {
-    tasks.value[index].title = prompt('Edit task title:', tasks.value[index].title)
-    console.log('tableau mis a jour', tasks.value)
+  const task = tasks.value.find((t) => t.id === id)
+  if (task) {
+    editingTask.value = { ...task } // On crée une copie pour ne pas modifier l'original direct
+    day.value = task.day // On s'assure que le titre du jour correspond
+    showmodale()
   }
 }
 // ----------------------------------------------------------------------
@@ -41,6 +70,7 @@ function showmodale() {
 }
 function deletemodale() {
   modal.value = false
+  editingTask.value = null
 }
 // -----------------------------------------------------------------
 // Function final du drag and drop 
@@ -50,8 +80,21 @@ function moveTask({ id, newDay }) {
     task.day = newDay
   }
 }
+function readtask() {
+  ViewNotif('Veuillez entrer une tâche à ajouté 🙏', 'error')
+}
 </script>
 <template>
+  <div class="calendar-container">
+    <Transition name="slide">
+      <Notif 
+        v-if="notification.show" 
+        :message="notification.message" 
+        :type="notification.type" 
+      />
+    </Transition>
+
+    </div>
   <div class="calendar-container">
     <div id="entête">
       <div class="calendar-hero">
@@ -61,7 +104,7 @@ function moveTask({ id, newDay }) {
       </div>
       <div class="overlay">
         <Transition name="fade">
-          <Input v-if="modal" @add-task="submitTask" :days="day" @close="deletemodale" />
+          <Input v-if="modal" @add-task="submitTask" @readtask="readtask" :days="day" @close="deletemodale" />
         </Transition>
       </div>
     </div>
@@ -90,7 +133,14 @@ function moveTask({ id, newDay }) {
 .fade-leave-active {
   transition: all 0.3s ease;
 }
-
+/* Animation pour la notification */
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.4s ease;
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
 
 .fade-enter-from,
 .fade-leave-to {
@@ -107,10 +157,10 @@ function moveTask({ id, newDay }) {
   padding-top: 100px;
   display: flex;
   justify-content: space-around;
-  background-image: url(/public/calendar.jpg);
+  background-image: url(/public/images.webp);
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: rgb(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.712);
   background-blend-mode: darken;
 }
 

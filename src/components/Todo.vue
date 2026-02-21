@@ -4,7 +4,7 @@ const props = defineProps({
   dayName: String,
   tasks: Array,
 })
-console.log(props.tasks)
+
 
 const emit = defineEmits(['clickday', 'delete-task', 'edit-task', 'move-task'])
 
@@ -40,7 +40,7 @@ const dropTask = (event) => {
 </script>
 <template>
   <div class="day-column" @dragover="dragOver" @drop="dropTask">
-
+    <!-- Noublie pas que les fonctions s'appliquent  sur  la div -->
     <div class="day-title" @click="sendClick">
       {{ dayName }}
     </div>
@@ -52,6 +52,7 @@ const dropTask = (event) => {
       draggable="true"
       @dragstart="(e) => dragStart(e, tache.id)"
     >
+    <!-- Cette ligne est très importante -->
       <p>{{ tache.title }}</p>
       <button @click="delet(tache.id)">❌</button>
       <button @click="edit(tache.id)">🖊</button>

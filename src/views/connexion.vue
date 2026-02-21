@@ -31,11 +31,12 @@ const connexion = async () => {
     return
   }
 
-  // 3. sauvegarder la session (simple)
-  localStorage.setItem('currentUser', JSON.stringify(user))
+const fakeToken = 'test' + Date.now()
+localStorage.setItem('key_name', fakeToken)
+localStorage.setItem('currentUser', JSON.stringify(user))
 
-  // 4. redirection
-  router.push('/homeCalendar')
+// 4. redirection
+router.push('/homeCalendar')
 }
 
 const goInscription = () => {
